@@ -44,6 +44,7 @@ func complete_client_initialization(entity) -> void:
 	player_instance.labelPlayerName.text = player_instance.player_display_name
 	player_instance.connect("client_action_requested", _on_client_action_requested)
 	player_instance.direct_chat.connect("send_message", _on_message_from_player)
+	player_instance.loading_screen.visibility_changed.connect(_unloading_screen_visibility_changed)
 
 func receive_chat_message(message: ChatMessage) -> void:
 	player_instance.direct_chat.receive_message_from_server(message)
@@ -111,3 +112,6 @@ func _on_message_from_player(message: ChatMessage) -> void:
 		"creation_schedule": message.creation_schedule
 	}
 	NetworkOrchestrator.send_chat_message_to_server.rpc_id(1, dictionnary_message)
+func _unloading_screen_visibility_changed() -> void:
+	print("_unloading_screen_visibility_changed is working")
+	GameOrchestrator.Emitter2D.event_guid = "{d89e875a-d34d-4715-b7af-6cb642489981}"

@@ -49,6 +49,9 @@ var requested_spawn_point: int = 0
 
 @onready var game_is_paused: bool = false
 
+var Listener2D: FmodListener2D
+var Emitter2D: FmodEventEmitter2D
+
 func _enter_tree() -> void:
 	get_tree().set_script(SCENE_TREE_EXTENDED_SCRIPT_PATH)
 
@@ -65,7 +68,18 @@ func _ready():
 	else:
 		change_network_role(NETWORK_ROLE.PLAYER)
 		change_game_state(GAME_STATES.HOME_MENU)
+		Listener2D= FmodListener2D.new()
+		self.add_child(Listener2D)
+		Listener2D.owner= get_tree().get_root()
+		
+		Emitter2D= FmodEventEmitter2D.new()
+		Emitter2D.event_guid= "{c7f946fd-d695-499b-a820-752799c4921d}"
+		Emitter2D.autoplay = true
+		
 
+		self.add_child(Emitter2D)
+		Emitter2D.owner= get_tree().get_root()
+		
 func change_network_role(new_network_role) -> int:
 	match new_network_role:
 		NETWORK_ROLE.PLAYER:
@@ -146,6 +160,7 @@ func _on_scene_changed(changed_scene: Node) -> void:
 					server_instance.populate_universe(univers_creation_entities)
 				NETWORK_ROLE.PLAYER:
 					NetworkOrchestrator.start_client(changed_scene)
+					
 		GAME_STATES_SCENES_PATHS[GAME_STATES.SERVER_UNIVERS_CREATION]:
 			changed_scene.connect("universe_data_retrieved", _on_universe_data_retrieved)
 			changed_scene.retrieve_universe_datas()
@@ -158,3 +173,4 @@ func _on_universe_data_retrieved(datas: Dictionary) -> void:
 
 func _on_populated_universe(current_scene: Node) -> void:
 	current_scene.assign_spawn_informations()
+	

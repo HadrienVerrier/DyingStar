@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://dtcsox8hfg83s"]
+[gd_scene load_steps=12 format=3 uid="uid://dtcsox8hfg83s"]
 
 [ext_resource type="Script" uid="uid://s8pbsagvb7ix" path="res://assets/models/spawn_kiosk/spawn_kiosk.gd" id="1_1t3ni"]
 [ext_resource type="ArrayMesh" uid="uid://2udj7wjyt5fu" path="res://assets/models/spawn_kiosk/kiosk_body.mesh" id="1_hh7gi"]
@@ -8,6 +8,7 @@
 [ext_resource type="Material" uid="uid://bd3mqgx6cyos" path="res://assets/models/spawn_kiosk/kiosk_button.material" id="4_fv45p"]
 [ext_resource type="Material" uid="uid://cg8puew0h0m3" path="res://assets/models/spawn_kiosk/kiosk_sign.material" id="6_fv45p"]
 [ext_resource type="Script" uid="uid://b6g3kd1dxqm12" path="res://assets/models/spawn_kiosk/kiosk_interaction_area.gd" id="8_bompr"]
+[ext_resource type="Script" uid="uid://72c4fo0cefsi" path="res://assets/models/spawn_kiosk/fmod_event_emitter_3d.gd" id="9_tdvuq"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_fv45p"]
 size = Vector3(1.5, 1.75, 0.6)
@@ -42,3 +43,16 @@ label = "[F] Request your ship"
 [node name="CollisionShape3D" type="CollisionShape3D" parent="KioskInteractionArea"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.875, 0)
 shape = SubResource("BoxShape3D_1t3ni")
+
+[node name="FmodEventEmitter3D" type="FmodEventEmitter3D" parent="."]
+event_name = "event:/Music/Demo/Level 01"
+event_guid = "{74bbba7c-76e8-488c-9cf9-67f000df1ffd}"
+autoplay = true
+fmod_parameters/Stinger/id = 398520047090374475
+fmod_parameters/Stinger = 1.0
+fmod_parameters/Stinger/variant_type = 3
+fmod_parameters/Progression/id = -5292116695896296994
+fmod_parameters/Progression = "Intro"
+fmod_parameters/Progression/labels = PackedStringArray("Intro", "Main")
+fmod_parameters/Progression/variant_type = 4
+script = ExtResource("9_tdvuq")

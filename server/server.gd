@@ -58,6 +58,7 @@ var ServersTicksTasks = {
 
 func _enter_tree() -> void:
 	NetworkOrchestrator.loadServerConfig()
+	FmodServer.mute_all_events();
 
 func _ready() -> void:
 	pass

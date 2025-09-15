@@ -17,7 +17,7 @@ signal client_action_requested(datas: Dictionary)
 @onready var camera_pivot: Node3D = $CameraPivot
 
 @onready var direct_chat: DirectChat = $UserInterface/DirectChat
-
+@onready var loading_screen: CanvasLayer = $UserInterface/LoadingScreen
 @onready var box4m: PackedScene = preload("res://scenes/props/testbox/box_4m.tscn")
 @onready var box50m: PackedScene = preload("res://scenes/props/testbox/box_50cm.tscn")
 @onready var isInsideBox4m: bool = false
@@ -264,6 +264,12 @@ func _physics_process(delta: float) -> void:
 	# Add the gravity.
 	elif not is_on_floor():
 		velocity -= up_direction * gravity * 2.0 * delta
+		
+	if velocity.length()>4:
+		if not $FmodEventEmitter3D.paused:
+			$FmodEventEmitter3D.play()
+	else:
+		$FmodEventEmitter3D.stop()
 		
 	move_and_slide()
 	update_last_basis()
