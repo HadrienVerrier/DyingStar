@@ -45,11 +45,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.875, 0)
 shape = SubResource("BoxShape3D_1t3ni")
 
 [node name="FmodEventEmitter3D" type="FmodEventEmitter3D" parent="."]
-event_name = "event:/Music/Demo/Level 01"
+event_name = "event:/Music/Demo/Level 01 (Kiosk PLH)"
 event_guid = "{74bbba7c-76e8-488c-9cf9-67f000df1ffd}"
 autoplay = true
+volume = 0.2
 fmod_parameters/Stinger/id = 398520047090374475
-fmod_parameters/Stinger = 1.0
+fmod_parameters/Stinger = 0.0
 fmod_parameters/Stinger/variant_type = 3
 fmod_parameters/Progression/id = -5292116695896296994
 fmod_parameters/Progression = "Intro"
