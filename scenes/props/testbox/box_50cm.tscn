@@ -26,6 +26,7 @@ event_name = "event:/sound_test/spawn_colis"
 event_guid = "{7bbb0878-baaa-466e-a4f5-c12da18131e7}"
 autoplay = true
 auto_release = true
+allow_fadeout = false
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = ExtResource("1_xngen")
