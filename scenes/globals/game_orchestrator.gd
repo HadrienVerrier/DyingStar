@@ -61,24 +61,30 @@ func _ready():
 			return
 	
 	get_tree().connect("scene_changed",_on_scene_changed)
+		
+	Listener2D = FmodListener2D.new()
+	
+	Emitter2D= FmodEventEmitter2D.new()
+	Emitter2D.event_guid= "{c7f946fd-d695-499b-a820-752799c4921d}"
+	Emitter2D.autoplay = true
+	
+	Listener2D.tree_entered.connect(func():
+		Listener2D.owner = get_tree().get_root()
+		
+		Emitter2D.tree_entered.connect(func():
+			Emitter2D.owner = get_tree().get_root()
+		)
+		call_deferred("add_child",Emitter2D)
+	)
+	call_deferred("add_child",Listener2D)
 	
 	if OS.has_feature("dedicated_server"):
 		change_network_role(NETWORK_ROLE.SERVER)
 		change_game_state(GAME_STATES.SERVER_UNIVERS_CREATION)
+		FmodServer.mute_all_events();
 	else:
 		change_network_role(NETWORK_ROLE.PLAYER)
 		change_game_state(GAME_STATES.HOME_MENU)
-		Listener2D= FmodListener2D.new()
-		self.add_child(Listener2D)
-		Listener2D.owner= get_tree().get_root()
-		
-		Emitter2D= FmodEventEmitter2D.new()
-		Emitter2D.event_guid= "{c7f946fd-d695-499b-a820-752799c4921d}"
-		Emitter2D.autoplay = true
-		
-
-		self.add_child(Emitter2D)
-		Emitter2D.owner= get_tree().get_root()
 		
 func change_network_role(new_network_role) -> int:
 	match new_network_role:

@@ -203,6 +203,11 @@ func _process(_delta: float) -> void:
 			if Input.is_action_just_pressed("interact"):
 				collider.interact(self)
 				interact_label.hide()
+	
+	$UserInterface/Debug/HBoxContainer/PlayerVelocityValue.text = str(snappedf(velocity.length(), 0.01))
+
+var _footstep_timer: float = 0.0
+var _footstep_interval: float = 0.5
 
 func _physics_process(delta: float) -> void:
 	if not is_multiplayer_authority(): return
@@ -256,7 +261,6 @@ func _physics_process(delta: float) -> void:
 		# "air" movement
 		if input_direction:
 			velocity += move_direction * speed * delta
-
 	
 	if is_on_floor() and is_jumping:
 		velocity += up_direction * jump_height * gravity
@@ -264,12 +268,19 @@ func _physics_process(delta: float) -> void:
 	# Add the gravity.
 	elif not is_on_floor():
 		velocity -= up_direction * gravity * 2.0 * delta
-		
-	if velocity.length()>4:
-		if not $FmodEventEmitter3D.paused:
-			$FmodEventEmitter3D.play()
+	
+	_footstep_timer += delta
+	
+	if velocity.length() > 3.0:
+		_footstep_interval = 0.5 / (velocity.length() / 3.0)
 	else:
-		$FmodEventEmitter3D.stop()
+		_footstep_interval = 0.0
+	
+	if is_on_floor():
+		if velocity.length() > 3.0:
+			if _footstep_timer >= _footstep_interval:
+				$FmodEventEmitter3D.play_one_shot()
+				_footstep_timer = 0.0
 		
 	move_and_slide()
 	update_last_basis()
