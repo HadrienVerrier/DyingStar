@@ -276,6 +276,7 @@ func _physics_process(delta: float) -> void:
 	else:
 		_footstep_interval = 0.0
 	
+	# @audio Walk Sound
 	if is_on_floor():
 		if velocity.length() > 3.0:
 			if _footstep_timer >= _footstep_interval:

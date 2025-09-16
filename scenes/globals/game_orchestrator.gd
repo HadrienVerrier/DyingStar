@@ -62,11 +62,19 @@ func _ready():
 	
 	get_tree().connect("scene_changed",_on_scene_changed)
 		
+	# @audio : Creation d'un Listener2D, gere les menu, music qui ne concerne pas l'univers 
 	Listener2D = FmodListener2D.new()
 	
+	# Music du loading
 	Emitter2D= FmodEventEmitter2D.new()
 	Emitter2D.event_guid= "{c7f946fd-d695-499b-a820-752799c4921d}"
 	Emitter2D.autoplay = true
+	
+	# @audio : Ambiance Sound Sandbox 
+	#Emitter2D= FmodEventEmitter2D.new()
+	#Emitter2D.event_guid= "{6c3061d4-9ed1-45a6-9f7d-c7fc45de72a5}"
+	#Emitter2D.autoplay = true
+	
 	
 	Listener2D.tree_entered.connect(func():
 		Listener2D.owner = get_tree().get_root()

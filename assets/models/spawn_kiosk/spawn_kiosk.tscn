@@ -45,7 +45,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.875, 0)
 shape = SubResource("BoxShape3D_1t3ni")
 
 [node name="FmodEventEmitter3D" type="FmodEventEmitter3D" parent="."]
-event_name = "event:/Music/Demo/Level 01 (Kiosk PLH)"
+event_name = "event:/Ambience/Props/Level 01 (Kiosk PLH)"
 event_guid = "{74bbba7c-76e8-488c-9cf9-67f000df1ffd}"
 autoplay = true
 volume = 0.2
