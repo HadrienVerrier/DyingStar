@@ -50,7 +50,7 @@ NetworkOrchestrator="*res://scenes/globals/network_orchestrator.gd"
 uuid="*res://addons/uuid/uuid.gd"
 PersistanceManager="*res://server/persistance_manager/PersistanceManager.cs"
 FmodManager="*res://addons/fmod/FmodManager.gd"
-Fmodbankmanager="*res://audio/fmodbankmanager.tscn"
+Fmodbankmanager="*res://audio/FmodBankLoader.tscn"
 
 [debug]
 

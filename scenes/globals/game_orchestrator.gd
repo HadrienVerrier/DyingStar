@@ -75,7 +75,7 @@ func _ready():
 	#Emitter2D.event_guid= "{6c3061d4-9ed1-45a6-9f7d-c7fc45de72a5}"
 	#Emitter2D.autoplay = true
 	
-	
+	# @audio
 	Listener2D.tree_entered.connect(func():
 		Listener2D.owner = get_tree().get_root()
 		
@@ -86,6 +86,7 @@ func _ready():
 	)
 	call_deferred("add_child",Listener2D)
 	
+	# @server
 	if OS.has_feature("dedicated_server"):
 		change_network_role(NETWORK_ROLE.SERVER)
 		change_game_state(GAME_STATES.SERVER_UNIVERS_CREATION)
