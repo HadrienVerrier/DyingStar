@@ -117,7 +117,7 @@ spot_angle = 30.0
 script = ExtResource("5_mugai")
 metadata/_custom_type_script = "uid://6f0l3p44h7vy"
 
-[node name="Ship_Ambiance3D" type="FmodEventEmitter3D" parent="."]
+[node name="Ship_Ambiance_E3D" type="FmodEventEmitter3D" parent="."]
 event_name = "event:/Ambience/Props/Level 01 (Kiosk PLH)"
 event_guid = "{74bbba7c-76e8-488c-9cf9-67f000df1ffd}"
 autoplay = true

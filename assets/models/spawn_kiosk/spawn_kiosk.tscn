@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://dtcsox8hfg83s"]
+[gd_scene load_steps=11 format=3 uid="uid://dtcsox8hfg83s"]
 
 [ext_resource type="Script" uid="uid://s8pbsagvb7ix" path="res://assets/models/spawn_kiosk/spawn_kiosk.gd" id="1_1t3ni"]
 [ext_resource type="ArrayMesh" uid="uid://2udj7wjyt5fu" path="res://assets/models/spawn_kiosk/kiosk_body.mesh" id="1_hh7gi"]
@@ -8,7 +8,6 @@
 [ext_resource type="Material" uid="uid://bd3mqgx6cyos" path="res://assets/models/spawn_kiosk/kiosk_button.material" id="4_fv45p"]
 [ext_resource type="Material" uid="uid://cg8puew0h0m3" path="res://assets/models/spawn_kiosk/kiosk_sign.material" id="6_fv45p"]
 [ext_resource type="Script" uid="uid://b6g3kd1dxqm12" path="res://assets/models/spawn_kiosk/kiosk_interaction_area.gd" id="8_bompr"]
-[ext_resource type="Script" uid="uid://72c4fo0cefsi" path="res://assets/models/spawn_kiosk/fmod_event_emitter_3d.gd" id="9_tdvuq"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_fv45p"]
 size = Vector3(1.5, 1.75, 0.6)
@@ -56,4 +55,3 @@ fmod_parameters/Progression/id = -5292116695896296994
 fmod_parameters/Progression = "Intro"
 fmod_parameters/Progression/labels = PackedStringArray("Intro", "Main")
 fmod_parameters/Progression/variant_type = 4
-script = ExtResource("9_tdvuq")

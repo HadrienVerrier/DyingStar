@@ -67,7 +67,7 @@ func _ready():
 	
 	# Music du loading
 	Emitter2D= FmodEventEmitter2D.new()
-	Emitter2D.event_guid= "{c7f946fd-d695-499b-a820-752799c4921d}"
+	Emitter2D.event_guid= "{aef547f9-2fb7-4501-94a6-79a418a9dafa}"
 	Emitter2D.autoplay = true
 	
 	# @audio : Ambiance Sound Sandbox 
