@@ -146,6 +146,14 @@ class QuadtreeChunk:
 				)
 				children.append(new_child)
 
+func to_sphere_uv(point: Vector3) -> Vector2:
+	var lon = atan2(point.z, point.x)  # -π .. π
+	var lat = asin(point.y)             # -π/2 .. π/2
+
+	var u = clamp(fmod(lon / TAU + 0.5, 1.0), 0.0, 1.0)
+	var v = clamp(fmod(lat / PI + 0.5, 1.0), 0.0, 1.0)
+	return Vector2(u, v)
+
 func visualize_quadtree(chunk: QuadtreeChunk):
 
 	var at_col_depth = chunk.depth == max_chunk_depth
@@ -170,6 +178,7 @@ func visualize_quadtree(chunk: QuadtreeChunk):
 
 		var vertex_array := PackedVector3Array()
 		var normal_array := PackedVector3Array()
+		var uv_array := PackedVector2Array()
 		var index_array := PackedInt32Array()
 
 		# Pre-allocate indices (we know exact count)
@@ -179,9 +188,10 @@ func visualize_quadtree(chunk: QuadtreeChunk):
 		# Build vertices & normals (initialized zero)
 		vertex_array.resize(resolution * resolution)
 		normal_array.resize(resolution * resolution)
-
+		uv_array.resize(resolution * resolution)
+		
 		var chunk_global_pos := (normal + offset.x * axis_a + offset.z * axis_b).normalized() * planet.radius
-
+		
 		var tri_idx: int = 0
 		for y in range(resolution):
 			for x in range(resolution):
@@ -198,7 +208,8 @@ func visualize_quadtree(chunk: QuadtreeChunk):
 				var lod_offset := point_on_plane.normalized() * 0.01 if edge else Vector3.ZERO
 				vertex_array[i] = sphere_pos - chunk_global_pos - lod_offset
 				normal_array[i] = Vector3.ZERO
-
+				uv_array[i] = to_sphere_uv(point_on_plane.normalized())
+				
 				# Track height extremes
 				var length := sphere_pos.length()
 				planet.min_height = min(planet.min_height, length)
@@ -240,12 +251,14 @@ func visualize_quadtree(chunk: QuadtreeChunk):
 		arrays[Mesh.ARRAY_VERTEX] = vertex_array
 		arrays[Mesh.ARRAY_NORMAL] = normal_array
 		arrays[Mesh.ARRAY_INDEX] = index_array
-
+		arrays[Mesh.ARRAY_TEX_UV] = uv_array
+		
 		if not at_col_depth or not chunk.children:
 			chunks_generating[chunk.identifier] = true
-
-		create_mesh_and_collision.call_deferred(arrays, chunk, chunk_global_pos, not chunk.children.is_empty())
-
+		
+		var safe_arrays = arrays.duplicate(true)
+		create_mesh_and_collision.call_deferred(safe_arrays, chunk, chunk_global_pos, not chunk.children.is_empty())
+	
 	# Recursively visualize children chunks
 	for child in chunk.children:
 		visualize_quadtree(child)
@@ -278,11 +291,11 @@ func create_mesh_and_collision(arrays: Array, chunk: QuadtreeChunk, chunk_pos: V
 		mi.set_instance_shader_parameter("offset_pos", chunk_pos)
 
 		if planet.terrain_material is ShaderMaterial:
-			var mat = planet.terrain_material as ShaderMaterial
-
+			#var mat = planet.terrain_material as ShaderMaterial
+			
 			#(material as ShaderMaterial).set_shader_parameter("h_min", planet.min_height)
 			#(material as ShaderMaterial).set_shader_parameter("h_max", planet.max_height)
-
+			
 			add_child(mi)
 
 			#add this chunk to chunk list
@@ -471,13 +484,16 @@ func update_chunks():
 
 func cleanup_collisions():
 	for chunkid: String in chunks_col_list:
-		if is_instance_valid(chunks_col_list[chunkid]):
-			var col = chunks_col_list[chunkid] as CollisionShape3D
-			if any_player_near(col, 400):
-				col.disabled = true
-			elif not any_player_near(col):
-				col.queue_free()
-				chunks_col_list.erase(chunkid)
+		var col = chunks_col_list[chunkid]
+		if not is_instance_valid(col):
+			chunks_col_list.erase(chunkid)
+			continue
+		
+		if any_player_near(col, 400):
+			col.disabled = true
+		elif not any_player_near(col):
+			col.queue_free()
+			chunks_col_list.erase(chunkid)
 
 func any_player_near(shape: CollisionShape3D, distance = 1000):
 	for pos: Vector3 in focus_positions:

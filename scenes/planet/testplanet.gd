@@ -15,7 +15,7 @@ var spawn_position: Vector3 = Vector3.ZERO
 
 func _enter_tree() -> void:
 	global_position = spawn_position
-	if not OS.has_feature("dedicated_server"):
+	if not OS.has_feature("dedicated_server") and not Engine.is_editor_hint():
 		$Atmosphere.sun_object = get_tree().current_scene.get_node("Star/DirectionalLight3D")
 
 
@@ -36,8 +36,8 @@ func update_planet():
 	planet_terrain.terrain_settings = planet_settings.terrain_settings
 
 	atmosphere.atmosphere_height = planet_settings.atmosphere_height
-	atmosphere.planet_radius = planet_settings.radius + 600
-
+	atmosphere.planet_radius = planet_settings.radius
+	
 	if planet_settings.has_ocean:
 		var watermesh = water_surface.mesh as SphereMesh
 		watermesh.radius = planet_settings.radius + planet_settings.sea_level
