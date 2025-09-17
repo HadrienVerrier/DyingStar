@@ -7,3 +7,5 @@ signal interacted()
 
 func interact(interactor: Node = null):
 	emit_signal("interacted", interactor)
+	
+	# TODO: @audio Startup ship sound when interact --> ship ambiance

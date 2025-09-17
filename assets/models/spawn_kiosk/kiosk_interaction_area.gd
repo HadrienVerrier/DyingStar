@@ -6,3 +6,5 @@ signal interacted()
 
 func interact(interactor: Node = null) -> void:
 	emit_signal("interacted", interactor)
+	
+	# TODO: @audio UI_validated sound (like a bell or something similaire)
