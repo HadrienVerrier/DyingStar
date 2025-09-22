@@ -28,7 +28,7 @@ DSP/dsp_buffer_count=4
 
 [application]
 
-config/name="DyingStar"
+config/name="DyingStar (4.4)"
 config/version="0.0.1-dev"
 run/main_scene="uid://dpderfrunb8lr"
 config/features=PackedStringArray("4.4", "C#", "Double Precision", "GL Compatibility")
@@ -38,14 +38,15 @@ boot_splash/minimum_display_time=1000
 
 [autoload]
 
+SettingsManager="*res://scenes/globals/settings_manager.gd"
 Globals="*res://scenes/globals/globals.gd"
 GameOrchestrator="*res://scenes/globals/game_orchestrator.gd"
 NetworkOrchestrator="*res://scenes/globals/network_orchestrator.gd"
-BackgroundMusic="*res://scenes/globals/background_music.tscn"
 uuid="*res://addons/uuid/uuid.gd"
 PersistanceManager="*res://server/persistance_manager/PersistanceManager.cs"
 FmodManager="*res://addons/fmod/FmodManager.gd"
 Fmod="*res://scenes/globals/Fmod.tscn"
+AudioManager="*res://scenes/globals/audio_manager.gd"
 
 [debug]
 
@@ -200,6 +201,5 @@ locale/translations=PackedStringArray("res://tools/localization/localisation.en.
 [rendering]
 
 renderer/rendering_method.mobile="gl_compatibility"
-anti_aliasing/quality/msaa_3d=1
-environment/defaults/default_clear_color=Color(0, 0, 0, 1)
+environment/defaults/default_clear_color=Color(0.310617, 0.310617, 0.310617, 1)
 occlusion_culling/use_occlusion_culling=true
